@@ -1,0 +1,19 @@
+post:
+  client:
+    dir: dist/client
+    entry: dist/client/index.html
+server:
+  entry: dist/server/index.cjs
+settings:
+  global:
+    - key: TITLE
+      type: string
+      label: Game Title
+      defaultValue: Reddi Console
+  subreddit:
+    - key: RESET_HOUR_UTC
+      type: number
+      label: Daily Reset Hour (UTC)
+      defaultValue: 0
+permissions:
+  images: false
