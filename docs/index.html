@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reddi-Pet — Reddit x Tamagotchi</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="./assets/css/theme.css" />
+  <meta name="description" content="Reddi-Pet: a Reddit-native virtual pet for interactive posts. Feed it with upvotes, comments, and daily prompts."/>
+</head>
+<body class="bg-ink text-slate-100 selection:bg-[var(--reddit)] selection:text-white">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Nav -->
+  <header class="border-b border-slate-800/80 backdrop-blur supports-[backdrop-filter]:bg-ink/70 sticky top-0 z-40">
+    <div class="container mx-auto flex items-center justify-between px-4 py-3">
+      <div class="flex items-center gap-3">
+        <img src="./assets/svg/reddi-logo.svg" alt="" class="h-8 w-8">
+        <span class="font-extrabold tracking-tight">Reddi-Pet</span>
+      </div>
+      <nav class="flex items-center gap-4 text-sm">
+        <a class="nav" href="#how">How it works</a>
+        <a class="nav" href="#features">Features</a>
+        <a class="nav" href="#docs">Docs</a>
+        <a class="btn btn--primary" href="https://devpost.com/software/reddi-pet" target="_blank" rel="noreferrer">Demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main id="main">
+    <section class="container mx-auto px-4 py-14 grid lg:grid-cols-2 gap-10 items-center">
+      <div>
+        <h1 class="font-display text-4xl md:text-5xl leading-tight">
+          A <span class="text-[var(--reddit)]">Reddit-native</span> virtual pet
+          that thrives on <span class="underline decoration-[var(--reddit)]">upvotes</span>.
+        </h1>
+        <p class="mt-5 text-slate-300 max-w-prose">
+          Meet <strong>Reddi-Pet</strong> — a Tamagotchi-style companion for
+          Reddit Interactive Posts. Feed it with <em>comments</em>, keep it happy with
+          <em>daily prompts</em>, and evolve it through <em>UGC mini-games</em>.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a class="btn btn--primary" href="#docs">Get Started</a>
+          <a class="btn btn--ghost" href="#features">See Features</a>
+        </div>
+        <p class="mt-3 text-xs text-slate-400">Built for the Reddit Fun & Games Hackathon.</p>
+      </div>
+
+      <!-- Tamagotchi Shell -->
+      <div class="justify-self-center">
+        <div class="shell" aria-label="virtual pet shell">
+          <img class="shell__img" src="./assets/svg/egg-shell.svg" alt="">
+          <div class="lcd" role="img" aria-label="pet display">
+            <img id="pet" src="./assets/svg/pet-idle.svg" alt="pet idle" class="pixel-img" />
+            <div class="lcd__hud">
+              <span id="mood" class="hud-pill">Mood: Chill</span>
+              <span id="xp" class="hud-pill">XP: 0001</span>
+            </div>
+          </div>
+          <div class="controls">
+            <button class="c-btn" data-action="feed" aria-label="Feed">🍪</button>
+            <button class="c-btn" data-action="play" aria-label="Play">🕹️</button>
+            <button class="c-btn" data-action="clean" aria-label="Clean">🧼</button>
+          </div>
+        </div>
+        <p class="mt-3 text-center text-xs text-slate-400">Tip: Upvotes & comments in your post act like snacks & playtime.</p>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section id="how" class="container mx-auto px-4 py-12">
+      <h2 class="h2">How it works</h2>
+      <div class="feature-grid">
+        <div class="card">
+          <h3 class="card__title">Attach to an Interactive Post</h3>
+          <p class="card__body">Embed Reddi-Pet in a Devvit Web interactive post. Readers can tap, react, and contribute UGC that affects the pet.</p>
+        </div>
+        <div class="card">
+          <h3 class="card__title">Community-fed</h3>
+          <p class="card__body">Upvotes, comments, and daily check-ins translate into hunger, happiness, and XP.</p>
+        </div>
+        <div class="card">
+          <h3 class="card__title">Evolutions</h3>
+          <p class="card__body">Hit milestones together to unlock pixel evolutions, badges, and flair-ready stickers.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="container mx-auto px-4 py-12">
+      <h2 class="h2">Features</h2>
+      <ul class="list">
+        <li>Pixel-perfect shell with LCD screen and subtle scanlines</li>
+        <li>Idle + blink animation, button SFX (respecting reduced-motion)</li>
+        <li>Themeable via CSS variables; light/dark auto</li>
+        <li>Docs anchors: API, embed guide, content policy, FAQ</li>
+      </ul>
+    </section>
+
+    <!-- Docs quick links -->
+    <section id="docs" class="container mx-auto px-4 py-12">
+      <h2 class="h2">Docs</h2>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <a class="doc-link" href="./terms.html">Terms of Service</a>
+        <a class="doc-link" href="./privacy.html">Privacy Policy</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800/60 mt-10">
+    <div class="container mx-auto px-4 py-8 text-sm flex flex-wrap items-center justify-between gap-3">
+      <span class="text-slate-400">© <span id="year"></span> Reddi-Pet</span>
+      <div class="flex items-center gap-4">
+        <a href="https://github.com/uxillary/reddi" class="nav">GitHub</a>
+        <a href="https://redditfunandgames.devpost.com/" class="nav">Hackathon</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./assets/js/app.js"></script>
+</body>
+</html>
