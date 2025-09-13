@@ -15,6 +15,16 @@ npm run build
 devvit deploy
 ```
 
+### Create an Interactive Post
+
+Once deployment finishes, attach the app to a post:
+
+1. Visit your subreddit and start a new post.
+2. Choose **Interactive** as the post type.
+3. Select **Reddi Console** from the app list and publish.
+
+You must be a subreddit moderator to attach the app.
+
 ## Legal
 
 This project includes a [Terms of Service](docs/terms.md) and a [Privacy Policy](docs/privacy.md). When GitHub Pages is enabled, these documents will be hosted at:
