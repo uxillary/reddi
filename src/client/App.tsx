@@ -14,12 +14,22 @@ type Pet = {
 const clamp = (v:number, min=0, max=100) => Math.max(min, Math.min(max, v));
 const todayId = () => new Date().toISOString().slice(0,10);
 
+const defaultPet = (): Pet => ({
+  name: 'EGG-420',
+  hunger: 20,
+  fun: 60,
+  clean: 70,
+  energy: 80,
+  dayId: todayId(),
+  lastTick: Date.now(),
+});
+
 function load(): Pet {
   const raw = localStorage.getItem('reddi.pet');
   if (raw) {
     try { return JSON.parse(raw) as Pet; } catch {}
   }
-  return { name: 'EGG-420', hunger: 20, fun: 60, clean: 70, energy: 80, dayId: todayId(), lastTick: Date.now() };
+  return defaultPet();
 }
 function save(p: Pet) { localStorage.setItem('reddi.pet', JSON.stringify(p)); }
 
@@ -63,6 +73,15 @@ export default function App() {
   const doPlay = () => setPet(p => { const n = { ...p, fun: clamp(p.fun + 20), energy: clamp(p.energy - 8), hunger: clamp(p.hunger + 8) }; save(n); return n; });
   const doClean= () => setPet(p => { const n = { ...p, clean: clamp(p.clean + 30) }; save(n); return n; });
   const doSleep= () => setPet(p => { const n = { ...p, energy: clamp(p.energy + 25) }; save(n); return n; });
+  const doRename = () => {
+    const name = prompt('Name your pet:', pet.name)?.trim();
+    if (name) setPet(p => { const n = { ...p, name }; save(n); return n; });
+  };
+  const doReset = () => {
+    const n = defaultPet();
+    save(n);
+    setPet(n);
+  };
 
   const sprite = petSprite(mood, frame.current);
 
@@ -92,6 +111,8 @@ export default function App() {
             <button className="sub" onClick={doPlay}>PLAY</button>
             <button onClick={doClean}>CLEAN</button>
             <button className="sub" onClick={doSleep}>SLEEP</button>
+            <button className="sub" onClick={doRename}>NAME</button>
+            <button className="sub" onClick={doReset}>RESET</button>
           </div>
 
           <div className="footer">

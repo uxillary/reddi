@@ -27,7 +27,7 @@ You must be a subreddit moderator to attach the app.
 
 ## Legal
 
-This project includes a [Terms of Service](docs/terms.md) and a [Privacy Policy](docs/privacy.md). When GitHub Pages is enabled, these documents will be hosted at:
+This project includes a [Terms of Service](docs/terms.html) and a [Privacy Policy](docs/privacy.html). When GitHub Pages is enabled, these documents will be hosted at:
 
 - `https://<username>.github.io/reddi/terms`
 - `https://<username>.github.io/reddi/privacy`
