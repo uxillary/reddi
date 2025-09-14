@@ -104,6 +104,8 @@ export default function App() {
             <div className="meter"><span style={{width: pet.clean + '%'}} /></div>
             <div>Energy</div>
             <div className="meter"><span style={{width: pet.energy + '%'}} /></div>
+            <div>Health</div>
+            <div className="meter"><span style={{width: health + '%'}} /></div>
           </div>
 
           <div className="controls">
