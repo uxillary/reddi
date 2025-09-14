@@ -1,4 +1,4 @@
-export type Mood = 'idle' | 'happy' | 'hungry' | 'dirty' | 'sleep';
+export type Mood = 'idle' | 'happy' | 'hungry' | 'dirty' | 'sleep' | 'bored';
 
 export function petSprite(mood: Mood, frame = 0): string {
   // Two simple frames for a subtle “blink/wiggle”
@@ -41,6 +41,16 @@ export function petSprite(mood: Mood, frame = 0): string {
 | |  - - | | z
 |  \ __/  |  z
  \  '--'  /   z
+  '-.__.-'`;
+  }
+  if (mood === 'bored') {
+    return String.raw`
+  .-""""-.
+ /  .--.  \
+|  /    \  |
+| |  - - | |
+|  \ ___/  |
+ \  '--'  /
   '-.__.-'`;
   }
   // idle

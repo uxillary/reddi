@@ -72,6 +72,7 @@ export default function App() {
     if (pet.hunger > 70) return 'hungry';
     if (pet.clean < 30) return 'dirty';
     if (pet.fun > 80) return 'happy';
+    if (pet.fun < 30) return 'bored';
     return 'idle';
   }, [pet]);
 
