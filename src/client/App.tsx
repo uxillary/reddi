@@ -9,6 +9,7 @@ type Pet = {
   energy: number;      // 0..100 (higher better)
   dayId: string;
   lastTick: number;    // ms
+  born: string;        // YYYY-MM-DD
 };
 
 const clamp = (v:number, min=0, max=100) => Math.max(min, Math.min(max, v));
@@ -22,12 +23,17 @@ const defaultPet = (): Pet => ({
   energy: 80,
   dayId: todayId(),
   lastTick: Date.now(),
+  born: todayId(),
 });
 
 function load(): Pet {
   const raw = localStorage.getItem('reddi.pet');
   if (raw) {
-    try { return JSON.parse(raw) as Pet; } catch {}
+    try {
+      const data = JSON.parse(raw) as Partial<Pet>;
+      if (!data.born) data.born = data.dayId ?? todayId();
+      return data as Pet;
+    } catch {}
   }
   return defaultPet();
 }
@@ -88,6 +94,7 @@ export default function App() {
   // Simple “evolution” badge for later: show stage by aggregate health
   const health = Math.round(( (100-pet.hunger) + pet.fun + pet.clean + pet.energy ) / 4);
   const stage = health > 85 ? '★ Stage 3' : health > 65 ? '★ Stage 2' : '★ Stage 1';
+  const age = Math.floor((Date.now() - new Date(pet.born).getTime()) / 86400000);
 
   return (
     <div className="console">
@@ -104,6 +111,8 @@ export default function App() {
             <div className="meter"><span style={{width: pet.clean + '%'}} /></div>
             <div>Energy</div>
             <div className="meter"><span style={{width: pet.energy + '%'}} /></div>
+            <div>Age</div>
+            <div style={{textAlign:'right'}}>{age}d</div>
             <div>Health</div>
             <div className="meter"><span style={{width: health + '%'}} /></div>
           </div>
@@ -118,7 +127,7 @@ export default function App() {
           </div>
 
           <div className="footer">
-            {stage} · {pet.name} · {pet.dayId}
+            {stage} · {pet.name} · Day {age}
           </div>
         </div>
       </div>
