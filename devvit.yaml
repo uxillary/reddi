@@ -1,9 +1,12 @@
 post:
-  client:
-    dir: dist/client
-    entry: index.html
+  dir: dist/client
+  entrypoints:
+    default:
+      entry: index.html
+      height: tall
 server:
-  entry: dist/server/index.cjs
+  dir: dist/server
+  entry: index.cjs
 settings:
   global:
     - key: TITLE
