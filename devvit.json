@@ -1,15 +1,26 @@
 {
+  "$schema": "https://developers.reddit.com/schema/config-file.v1.json",
+  "name": "reddi-pet",
+  "version": "0.1.0",
+  "description": "ASCII virtual pet in a retro handheld UI",
   "post": {
+<<<<<<< Updated upstream
     "client": { "dir": "dist/client", "entry": "index.html" }
+=======
+    "dir": "dist/client",
+    "entrypoints": {
+      "default": {
+        "entry": "index.html",
+        "height": "tall"
+      }
+    }
+>>>>>>> Stashed changes
   },
-  "server": { "entry": "dist/server/index.cjs" },
-  "settings": {
-    "global": [
-      { "key": "TITLE", "type": "string", "label": "Game Title", "defaultValue": "Reddi Console" }
-    ],
-    "subreddit": [
-      { "key": "RESET_HOUR_UTC", "type": "number", "label": "Daily Reset Hour (UTC)", "defaultValue": 0 }
-    ]
+  "server": {
+    "dir": "dist/server",
+    "entry": "index.cjs"
   },
-  "permissions": { "images": false }
+  "dev": {
+    "subreddit": "reddi_pet_dev"
+  }
 }

@@ -1,13 +1,13 @@
 {
-  "name": "reddi-console",
+  "name": "reddi-pet",
   "private": true,
   "type": "module",
   "scripts": {
     "build:client": "vite build -c vite.client.config.ts",
     "build:server": "vite build -c vite.server.config.ts",
     "build": "npm run build:client && npm run build:server",
-    "dev": "devvit-cli playtest",
-    "deploy": "npm run build && devvit-cli deploy"
+    "dev": "devvit playtest",
+    "deploy": "npm run build && devvit deploy"
   },
   "dependencies": {
     "express": "^5.1.0",
@@ -15,10 +15,12 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@devvit/cli": "^0.10.0",
+    "@devvit/cli": "0.12.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "typescript": "^5.6.2",
     "vite": "^5.4.0"
-  }
+  },
+  "version": "0.0.0",
+  "license": "BSD-3-Clause"
 }
