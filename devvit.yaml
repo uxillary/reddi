@@ -1,7 +1,7 @@
 post:
   client:
     dir: dist/client
-    entry: dist/client/index.html
+    entry: index.html
 server:
   entry: dist/server/index.cjs
 settings:

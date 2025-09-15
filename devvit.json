@@ -1,6 +1,6 @@
 {
   "post": {
-    "client": { "dir": "dist/client", "entry": "dist/client/index.html" }
+    "client": { "dir": "dist/client", "entry": "index.html" }
   },
   "server": { "entry": "dist/server/index.cjs" },
   "settings": {
