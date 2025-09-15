@@ -4,9 +4,6 @@
   "version": "0.1.0",
   "description": "ASCII virtual pet in a retro handheld UI",
   "post": {
-<<<<<<< Updated upstream
-    "client": { "dir": "dist/client", "entry": "index.html" }
-=======
     "dir": "dist/client",
     "entrypoints": {
       "default": {
@@ -14,7 +11,6 @@
         "height": "tall"
       }
     }
->>>>>>> Stashed changes
   },
   "server": {
     "dir": "dist/server",
