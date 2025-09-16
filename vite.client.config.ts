@@ -2,9 +2,9 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   root: 'src/client',
-  base: '/reddi/',
+  base: './',
   build: {
-    outDir: '../../dist/client',
+    outDir: '../../dist/client',  // << write to top-level dist/client
     emptyOutDir: true
   }
 });
