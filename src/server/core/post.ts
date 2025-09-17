@@ -1,16 +1,32 @@
 import { context, reddit } from '@devvit/web/server';
 
-export const createPost = async () => {
+export type MenuResponse = {
+  showToast?: {
+    message: string;
+    type?: 'success' | 'error';
+  };
+  navigateTo?: string;
+};
+
+export const createPost = async (): Promise<MenuResponse> => {
   const { subredditName } = context;
   if (!subredditName) {
     throw new Error('subredditName is required');
   }
 
-  return await reddit.submitCustomPost({
+  const post = await reddit.submitCustomPost({
     splash: {
       appDisplayName: 'reddy-pet',
     },
-    subredditName: subredditName,
+    subredditName,
     title: 'reddy-pet',
   });
+
+  return {
+    showToast: {
+      message: 'Interactive post created!',
+      type: 'success',
+    },
+    navigateTo: post.permalink ?? `/r/${subredditName}`,
+  };
 };
