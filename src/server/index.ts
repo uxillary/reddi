@@ -11,12 +11,17 @@ app.get('/api/health', (_req, res) => res.json({ ok: true }));
 
 app.post('/internal/menu/post-create', async (_req: Request, res: Response) => {
   try {
-    const post = await createPost();
-    res.json(post);
+    const response = await createPost();
+    res.json(response);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     console.error('Failed to create interactive post', error);
-    res.status(500).json({ error: message });
+    res.json({
+      showToast: {
+        message: `Failed to create interactive post: ${message}`,
+        type: 'error',
+      },
+    });
   }
 });
 

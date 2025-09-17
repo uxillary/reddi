@@ -33,7 +33,9 @@ function load(): Pet {
       const data = JSON.parse(raw) as Partial<Pet>;
       if (!data.born) data.born = data.dayId ?? todayId();
       return data as Pet;
-    } catch {}
+    } catch (error) {
+      console.warn('Failed to parse saved pet data', error);
+    }
   }
   return defaultPet();
 }
