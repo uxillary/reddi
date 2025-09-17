@@ -1,8 +1,27 @@
 import express from 'express';
+import type { Request, Response } from 'express';
+import { createPost } from './core/post.js';
+
 const app = express();
 app.use(express.json());
 
 // Health probe (Devvit Web hits your bundled server code)
 app.get('/api/health', (_req, res) => res.json({ ok: true }));
+
+app.post('/internal/menu/post-create', async (_req: Request, res: Response) => {
+  try {
+    const post = await createPost();
+    res.json(post);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('Failed to create interactive post', error);
+    res.status(500).json({ error: message });
+  }
+});
+
+const port = Number(process.env.PORT ?? 3000);
+app.listen(port, '0.0.0.0', () => {
+  console.log(`[server] listening on port ${port}`);
+});
 
 export default app;
