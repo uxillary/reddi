@@ -1,37 +1,31 @@
-# Reddi Console 🧪
-ASCII virtual pet in a retro handheld UI, playable inside Reddit Interactive Posts.
+## Devvit React Starter
 
-## How to run
-```bash
-npm i -g devvit
-devvit login
-npm install
-npm run dev
-```
+A starter to build web applications on Reddit's developer platform
 
-Build & deploy
-```bash
-npm run build
-devvit deploy
-```
+- [Devvit](https://developers.reddit.com/): A way to build and deploy immersive games on Reddit
+- [Vite](https://vite.dev/): For compiling the webView
+- [React](https://react.dev/): For UI
+- [Express](https://expressjs.com/): For backend logic
+- [Tailwind](https://tailwindcss.com/): For styles
+- [Typescript](https://www.typescriptlang.org/): For type safety
 
-### Create an Interactive Post
+## Getting Started
 
-Once deployment finishes, attach the app to a post:
+> Make sure you have Node 22 downloaded on your machine before running!
 
-1. Visit your subreddit and start a new post.
-2. Choose **Interactive** as the post type.
-3. Select **Reddi Console** from the app list and publish.
+1. Run `npm create devvit@latest --template=react`
+2. Go through the installation wizard. You will need to create a Reddit account and connect it to Reddit developers
+3. Copy the command on the success page into your terminal
 
-You must be a subreddit moderator to attach the app.
+## Commands
 
-## Legal
+- `npm run dev`: Starts a development server where you can develop your application live on Reddit.
+- `npm run build`: Builds your client and server projects
+- `npm run deploy`: Uploads a new version of your app
+- `npm run launch`: Publishes your app for review
+- `npm run login`: Logs your CLI into Reddit
+- `npm run check`: Type checks, lints, and prettifies your app
 
-This project includes a [Terms of Service](docs/terms.html) and a [Privacy Policy](docs/privacy.html). When GitHub Pages is enabled, these documents will be hosted at:
+## Cursor Integration
 
-- `https://<username>.github.io/reddi/terms`
-- `https://<username>.github.io/reddi/privacy`
-
-## Notes
-
-All sprites are ASCII (original). No third-party assets. Parody naming ("Reddi") avoids direct Tamagotchi IP usage (no logos/sprites).
+This template comes with a pre-configured cursor environment. To get started, [download cursor](https://www.cursor.com/downloads) and enable the `devvit-mcp` when prompted.

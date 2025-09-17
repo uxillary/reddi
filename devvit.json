@@ -1,14 +1,11 @@
 {
   "$schema": "https://developers.reddit.com/schema/config-file.v1.json",
-  "name": "reddi-pet",
-  "version": "0.1.0",
-  "description": "ASCII virtual pet in a retro handheld UI",
+  "name": "reddy-pet",
   "post": {
     "dir": "dist/client",
     "entrypoints": {
       "default": {
-        "entry": "index.html",
-        "height": "tall"
+        "entry": "index.html"
       }
     }
   },
@@ -16,7 +13,19 @@
     "dir": "dist/server",
     "entry": "index.cjs"
   },
-  "dev": {
-    "subreddit": "reddi_dev"
+  "media": {},
+  "menu": {
+    "items": [
+      {
+        "label": "Create a new post",
+        "description": "reddy-pet",
+        "location": "subreddit",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/post-create"
+      }
+    ]
+  },
+  "triggers": {
+    "onAppInstall": "/internal/on-app-install"
   }
 }
