@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reddi-Pet Blog Post</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/css/theme.css" />
+  <meta name="description" content="Deep dives and patch notes from the Reddi-Pet tamagotchi." />
+</head>
+<body class="bg-ink text-slate-100 selection:bg-[var(--reddit)] selection:text-white">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="border-b border-slate-800/80 backdrop-blur supports-[backdrop-filter]:bg-ink/70 sticky top-0 z-40">
+    <div class="container mx-auto flex items-center justify-between px-4 py-3">
+      <div class="flex items-center gap-3">
+        <img src="../assets/svg/reddi-logo.svg" alt="" class="h-8 w-8">
+        <span class="font-extrabold tracking-tight">Reddi-Pet</span>
+      </div>
+      <nav class="flex items-center gap-4 text-sm">
+        <a class="nav" href="../index.html">Home</a>
+        <a class="nav" href="./index.html">Blog</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container mx-auto px-4 py-14">
+    <div class="max-w-3xl">
+      <p class="blog-card__meta js-post-meta">Loading…</p>
+      <h1 class="font-display text-3xl md:text-4xl leading-tight mt-3 js-post-title">Dialing into the feed…</h1>
+      <p class="mt-3 text-slate-300 js-post-description"></p>
+    </div>
+
+    <article class="blog-article js-post-body">
+      <p class="text-slate-400">Booting up your story.</p>
+    </article>
+
+    <div class="blog-error hidden js-post-error">
+      <p>We couldn't find that post. Double-check the <code>post</code> query param or make sure the file exists.</p>
+      <a class="btn btn--ghost mt-4 inline-flex" href="./index.html">← Back to blog index</a>
+    </div>
+  </main>
+
+  <footer class="border-t border-slate-800/60 mt-10">
+    <div class="container mx-auto px-4 py-8 text-sm flex flex-wrap items-center justify-between gap-3">
+      <span class="text-slate-400">© <span id="year"></span> Reddi-Pet</span>
+      <div class="flex items-center gap-4">
+        <a href="https://github.com/uxillary/reddi" class="nav">GitHub</a>
+        <a href="https://redditfunandgames.devpost.com/" class="nav">Hackathon</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const slug = params.get('post');
+      const titleEl = document.querySelector('.js-post-title');
+      const metaEl = document.querySelector('.js-post-meta');
+      const descriptionEl = document.querySelector('.js-post-description');
+      const bodyEl = document.querySelector('.js-post-body');
+      const errorEl = document.querySelector('.js-post-error');
+      const year = document.getElementById('year');
+      if (year) year.textContent = new Date().getFullYear();
+
+      if (!slug) {
+        if (errorEl) errorEl.classList.remove('hidden');
+        if (bodyEl) bodyEl.innerHTML = '';
+        if (metaEl) metaEl.textContent = 'Missing slug';
+        if (titleEl) titleEl.textContent = 'No post selected';
+        return;
+      }
+
+      const manifestPath = './posts.json';
+
+      const applyMeta = (post) => {
+        if (!post) return;
+        if (titleEl) titleEl.textContent = post.title || slug;
+        if (descriptionEl) descriptionEl.textContent = post.description || '';
+        if (metaEl) {
+          const date = post.date ? new Date(post.date) : null;
+          const formatted = date && !Number.isNaN(date.getTime())
+            ? date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })
+            : null;
+          const bits = [];
+          if (post.tagline) bits.push(post.tagline);
+          if (formatted) bits.push(formatted);
+          metaEl.textContent = bits.join(' • ') || 'Reddi-Pet Broadcast';
+        }
+      };
+
+      const renderContent = (raw) => {
+        if (!bodyEl) return;
+        let content = raw.trim();
+        if (content.startsWith('---')) {
+          const fm = content.match(/^---[\s\S]*?---\s*/);
+          if (fm) {
+            content = content.slice(fm[0].length).trimStart();
+          }
+        }
+        bodyEl.innerHTML = marked.parse(content, { mangle: false, headerIds: false });
+      };
+
+      fetch(manifestPath, { cache: 'no-store' })
+        .then((res) => {
+          if (!res.ok) throw new Error('manifest');
+          return res.json();
+        })
+        .then((data) => {
+          const posts = Array.isArray(data) ? data : data.posts;
+          if (!Array.isArray(posts)) throw new Error('manifest');
+          const post = posts.find((item) => item.slug === slug);
+          if (!post) throw new Error('missing');
+          applyMeta(post);
+          return fetch(`./${slug}.mdx`, { cache: 'no-store' });
+        })
+        .then((res) => {
+          if (!res.ok) throw new Error('content');
+          return res.text();
+        })
+        .then((text) => {
+          renderContent(text);
+        })
+        .catch((error) => {
+          console.warn('Unable to render blog post', error);
+          if (errorEl) errorEl.classList.remove('hidden');
+          if (bodyEl) bodyEl.innerHTML = '';
+          if (metaEl) metaEl.textContent = '404';
+          if (titleEl) titleEl.textContent = 'Post offline';
+        });
+    })();
+  </script>
+</body>
+</html>

@@ -43,6 +43,31 @@ body{font-family:Inter,system-ui,Segoe UI,Roboto,Apple Color Emoji,Noto Color Em
 .list{list-style:inside square; color:#cbd5e1}
 .doc-link{display:block; padding:14px 16px; border:1px dashed #334155; border-radius:12px}
 .doc-link:hover{border-style:solid; border-color:var(--reddit)}
+.blog-header{display:flex; align-items:center; justify-content:space-between; gap:1.5rem; flex-wrap:wrap}
+.blog-subtitle{color:#cbd5e1; max-width:32rem}
+.blog-grid{display:grid; margin-top:1.5rem; gap:16px; grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.blog-card{position:relative; border:1px solid #223047; border-radius:16px; padding:20px; background:linear-gradient(135deg,#0c1322,#131f33)}
+.blog-card::before{content:""; position:absolute; inset:12px; border-radius:14px; border:1px dashed #334155; opacity:.7; pointer-events:none}
+.blog-card:hover{border-color:var(--reddit); box-shadow:0 0 0 2px #ff450022}
+.blog-card__meta{font-size:.75rem; font-family:"Press Start 2P"; letter-spacing:.5px; text-transform:uppercase; color:#f97316}
+.blog-card__title{margin-top:.8rem; font-size:1.1rem; font-weight:700}
+.blog-card__excerpt{margin-top:.5rem; color:#cbd5e1}
+.blog-card__cta{margin-top:1.1rem; display:inline-flex; align-items:center; gap:.4rem; color:var(--mint); font-weight:600}
+.blog-card__cta::after{content:"→"; font-family:"Press Start 2P"; font-size:.55rem}
+.blog-card--loading{background:repeating-linear-gradient(135deg,#0c1322 0 20px,#111b2c 20px 40px)}
+.blog-empty{margin-top:1.5rem; color:#94a3b8; font-size:.9rem}
+.blog-empty code{font-family:"Press Start 2P",monospace; font-size:.7rem; color:#f97316}
+.blog-article{margin-top:2.5rem; max-width:65ch; font-size:1.05rem; line-height:1.75}
+.blog-article h2{font-size:1.65rem; margin-top:2.4rem; margin-bottom:1rem; font-weight:700}
+.blog-article h3{font-size:1.3rem; margin-top:1.8rem; margin-bottom:.7rem; font-weight:700}
+.blog-article p{margin-top:1rem; color:#e2e8f0}
+.blog-article a{color:var(--mint); text-decoration:underline dotted}
+.blog-article ul,.blog-article ol{margin:1.2rem 0 1.2rem 1.2rem; padding:0; color:#e2e8f0}
+.blog-article li{margin-bottom:.6rem}
+.blog-article blockquote{margin:1.4rem 0; padding:1rem 1.2rem; border-left:4px solid var(--reddit); background:#1b293f; color:#f8fafc; border-radius:12px}
+.blog-article code{font-family:"Press Start 2P",monospace; font-size:.7rem; background:#0b1320; padding:.2rem .35rem; border-radius:.4rem}
+.blog-article pre{background:#0b1320; color:#f1f5f9; padding:1rem 1.2rem; border-radius:14px; overflow:auto; font-size:.85rem; line-height:1.6}
+.blog-error{margin-top:2rem; padding:1.5rem; border:1px dashed #334155; border-radius:14px; background:#0b1320; color:#f8fafc; max-width:42ch}
 @media (prefers-reduced-motion:no-preference){
   #pet.blink{animation:blink .8s steps(1) 1}
   .shell{animation:float 6s ease-in-out infinite}
