@@ -34,9 +34,12 @@
     });
   };
 
-  const renderPost = (post) => {
+  const renderPost = (post, index) => {
     const article = document.createElement('article');
     article.className = 'blog-card';
+    if (post && (post.feature || index === 0)) {
+      article.classList.add('blog-card--feature');
+    }
 
     const meta = document.createElement('div');
     meta.className = 'blog-card__meta';
@@ -70,7 +73,11 @@
     }
 
     const count = Number.isFinite(limit) && limit > 0 ? limit : posts.length;
-    posts.slice(0, count).forEach(renderPost);
+    posts
+      .slice(0, count)
+      .forEach((post, index) => {
+        renderPost(post, index);
+      });
   };
 
   fetch(manifestPath, { cache: 'no-store' })

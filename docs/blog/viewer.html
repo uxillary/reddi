@@ -104,6 +104,12 @@
         bodyEl.innerHTML = marked.parse(content, { mangle: false, headerIds: false });
       };
 
+      const resolveContentPath = (post) => {
+        if (!post) return `${slug}.mdx`;
+        if (post.file) return post.file;
+        return `${slug}.mdx`;
+      };
+
       fetch(manifestPath, { cache: 'no-store' })
         .then((res) => {
           if (!res.ok) throw new Error('manifest');
@@ -115,7 +121,7 @@
           const post = posts.find((item) => item.slug === slug);
           if (!post) throw new Error('missing');
           applyMeta(post);
-          return fetch(`./${slug}.mdx`, { cache: 'no-store' });
+          return fetch(`./${resolveContentPath(post)}`, { cache: 'no-store' });
         })
         .then((res) => {
           if (!res.ok) throw new Error('content');

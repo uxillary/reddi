@@ -1,6 +1,15 @@
 {
   "posts": [
     {
+      "slug": "reddi-app-struggles",
+      "title": "Building the reddi app: my struggles so far",
+      "description": "A candid log of Node version chaos, Devvit reinstall loops, and invisible playtests.",
+      "date": "2025-02-17",
+      "tagline": "Dev Log",
+      "file": "reddi-app-struggles.md",
+      "feature": true
+    },
+    {
       "slug": "welcome-to-the-pixel-hatchery",
       "title": "Welcome to the Pixel Hatchery",
       "description": "How Reddi-Pet blends Tamagotchi nostalgia with Reddit's hive mind.",
