@@ -105,8 +105,16 @@ export default function App() {
 
   const ascii = petSprite(mood, frame.current);
   const asciiLines = ascii.split('\n');
-  while (asciiLines.length && asciiLines[0].trim() === '') asciiLines.shift();
-  while (asciiLines.length && asciiLines[asciiLines.length - 1].trim() === '') asciiLines.pop();
+  while (asciiLines.length) {
+    const first = asciiLines[0];
+    if (!first || first.trim() !== '') break;
+    asciiLines.shift();
+  }
+  while (asciiLines.length) {
+    const last = asciiLines[asciiLines.length - 1];
+    if (!last || last.trim() !== '') break;
+    asciiLines.pop();
+  }
   const asciiFace = asciiLines.map(line => line.replace(/\s+$/, '')).join('\n');
 
   // Simple “evolution” badge for later: show stage by aggregate health
@@ -157,6 +165,12 @@ export default function App() {
           </div>
 
           <div className="meta">★ EGG-{eggId} • Day {day}</div>
+          <nav className="links">
+            <a href="https://github.com/uxillary/reddi" target="_blank" rel="noreferrer">Reddi Repo</a>
+            <a href="https://github.com/uxillary" target="_blank" rel="noreferrer">GitHub</a>
+            <a href="https://adamj.link" target="_blank" rel="noreferrer">adamj.link</a>
+            <a href="https://devpost.com/software/reddi-pet" target="_blank" rel="noreferrer">Reddi App</a>
+          </nav>
         </div>
       </div>
     </div>
