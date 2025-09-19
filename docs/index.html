@@ -23,6 +23,7 @@
       <nav class="flex items-center gap-4 text-sm">
         <a class="nav" href="#how">How it works</a>
         <a class="nav" href="#features">Features</a>
+        <a class="nav" href="#blog">Blog</a>
         <a class="nav" href="#docs">Docs</a>
         <a class="btn btn--primary" href="https://devpost.com/software/reddi-pet" target="_blank" rel="noreferrer">Demo</a>
       </nav>
@@ -100,6 +101,29 @@
       </ul>
     </section>
 
+    <!-- Blog -->
+    <section id="blog" class="container mx-auto px-4 py-12">
+      <div class="blog-header">
+        <div>
+          <h2 class="h2">Pixel Patch Notes</h2>
+          <p class="blog-subtitle">Latest transmissions from the Reddi-Pet lab.</p>
+        </div>
+        <a class="btn btn--ghost" href="./blog/index.html">See all posts</a>
+      </div>
+
+      <div class="blog-grid" data-blog-list data-blog-manifest="./blog/posts.json" data-blog-base="./blog">
+        <article class="blog-card blog-card--loading" data-blog-loading>
+          <div class="blog-card__meta">Syncing blog feed…</div>
+          <h3 class="blog-card__title">Fetching tamagotchi gossip</h3>
+          <p class="blog-card__excerpt">Give us a sec while we dial up the modem.</p>
+        </article>
+      </div>
+
+      <p class="blog-empty" data-blog-empty hidden>
+        No posts yet! Feed your Reddi-Pet a fresh .mdx file in <code>/docs/blog</code> to wake this feed up.
+      </p>
+    </section>
+
     <!-- Docs quick links -->
     <section id="docs" class="container mx-auto px-4 py-12">
       <h2 class="h2">Docs</h2>
@@ -122,5 +146,6 @@
   </footer>
 
   <script src="./assets/js/app.js"></script>
+  <script src="./assets/js/blog.js"></script>
 </body>
 </html>

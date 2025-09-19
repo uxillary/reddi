@@ -1,0 +1,18 @@
+{
+  "posts": [
+    {
+      "slug": "welcome-to-the-pixel-hatchery",
+      "title": "Welcome to the Pixel Hatchery",
+      "description": "How Reddi-Pet blends Tamagotchi nostalgia with Reddit's hive mind.",
+      "date": "2025-02-10",
+      "tagline": "Dev Log"
+    },
+    {
+      "slug": "tamagotchi-telemetry-001",
+      "title": "Telemetry 001: Feeding Frenzy",
+      "description": "Exploring how upvotes, comments, and check-ins keep your companion thriving.",
+      "date": "2025-02-03",
+      "tagline": "Changelog"
+    }
+  ]
+}

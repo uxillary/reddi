@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reddi-Pet Blog</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../assets/css/theme.css" />
+  <meta name="description" content="Dev logs, changelogs, and tamagotchi telemetry straight from the Reddi-Pet team." />
+</head>
+<body class="bg-ink text-slate-100 selection:bg-[var(--reddit)] selection:text-white">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="border-b border-slate-800/80 backdrop-blur supports-[backdrop-filter]:bg-ink/70 sticky top-0 z-40">
+    <div class="container mx-auto flex items-center justify-between px-4 py-3">
+      <div class="flex items-center gap-3">
+        <img src="../assets/svg/reddi-logo.svg" alt="" class="h-8 w-8">
+        <span class="font-extrabold tracking-tight">Reddi-Pet</span>
+      </div>
+      <nav class="flex items-center gap-4 text-sm">
+        <a class="nav" href="../index.html">Home</a>
+        <a class="nav" href="../index.html#how">How it works</a>
+        <a class="nav" href="../index.html#features">Features</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="container mx-auto px-4 py-14">
+      <div class="max-w-2xl">
+        <p class="blog-card__meta">Dev Log</p>
+        <h1 class="font-display text-3xl md:text-4xl leading-tight mt-3">Reddi-Pet Signal Boost</h1>
+        <p class="mt-4 text-slate-300">
+          Patch notes, experiments, and community spotlights. Every post hatches from a <code>.mdx</code> dropped in
+          <span class="font-semibold">/docs/blog</span>.
+        </p>
+      </div>
+
+      <div class="blog-grid" data-blog-list data-blog-limit="0" data-blog-manifest="./posts.json" data-blog-base=".">
+        <article class="blog-card blog-card--loading" data-blog-loading>
+          <div class="blog-card__meta">Spinning up modem…</div>
+          <h3 class="blog-card__title">Loading pixel updates</h3>
+          <p class="blog-card__excerpt">If this sticks around, double-check your manifest or file paths.</p>
+        </article>
+      </div>
+
+      <p class="blog-empty" data-blog-empty hidden>
+        Your pet is snoozing. Add a new <code>.mdx</code> file and list it in <code>posts.json</code> to publish an update.
+      </p>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-800/60 mt-10">
+    <div class="container mx-auto px-4 py-8 text-sm flex flex-wrap items-center justify-between gap-3">
+      <span class="text-slate-400">© <span id="year"></span> Reddi-Pet</span>
+      <div class="flex items-center gap-4">
+        <a href="https://github.com/uxillary/reddi" class="nav">GitHub</a>
+        <a href="https://redditfunandgames.devpost.com/" class="nav">Hackathon</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/blog.js"></script>
+  <script>
+    const year = document.getElementById('year');
+    if (year) year.textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
