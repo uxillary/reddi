@@ -11,7 +11,7 @@ body{font-family:Inter,system-ui,Segoe UI,Roboto,Apple Color Emoji,Noto Color Em
 .h2{font-family:"Press Start 2P";letter-spacing:.5px;font-size:1.25rem;margin-bottom:1rem}
 .nav{color:rgb(203,213,225)}
 .nav:hover{color:#fff}
-.btn{display:inline-flex align-items:center gap:.5rem border:1px solid #334155 padding:.6rem 1rem border-radius:.8rem}
+.btn{display:inline-flex; align-items:center; gap:.5rem; border:1px solid #334155; padding:.6rem 1rem; border-radius:.8rem}
 .btn--primary{background:var(--reddit); border-color:transparent; color:white}
 .btn--ghost:hover{border-color:#64748b}
 
