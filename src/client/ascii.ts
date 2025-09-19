@@ -1,14 +1,14 @@
 export type Mood = 'idle' | 'happy' | 'hungry' | 'dirty' | 'sleep' | 'bored';
 
-export function petSprite(mood: Mood, frame = 0): string {
-  // Two simple frames for a subtle “blink/wiggle”
-  const blink = frame % 2 === 0 ? "o" : "-";
+export function petSprite(mood: Mood, blinkOn = false): string {
+  const eye = blinkOn ? '-' : '•';
+  const eyes = `${eye}${eye}`;
   if (mood === 'happy') {
     return String.raw`
   .-""""-.
  /  .--.  \
 |  /    \  |
-| |  ${blink}${blink}  | |
+| |  ${eyes}  | |
 |  \ -- /  |
  \  '--'  /
   '-.__.-'`;
@@ -18,7 +18,7 @@ export function petSprite(mood: Mood, frame = 0): string {
   .-""""-.
  /  .--.  \
 |  /    \  |
-| |  ${blink}_  | |
+| |  ${eye}_  | |
 |  \ __/   |
  \  '--.  /
   '-.__\-'`;
@@ -28,7 +28,7 @@ export function petSprite(mood: Mood, frame = 0): string {
   .-""""-.
  /  .--.  \
 |  /    \  |
-| |  ${blink}${blink}  | |  ~
+| |  ${eyes}  | |  ~
 |  \ .. /  | ~
  \  '--'  /  ~
   '-.__.-'`;
@@ -58,7 +58,7 @@ export function petSprite(mood: Mood, frame = 0): string {
   .-""""-.
  /  .--.  \
 |  /    \  |
-| |  ${blink}${blink}  | |
+| |  ${eyes}  | |
 |  \ __/  |
  \  '--'  /
   '-.__.-'`;
