@@ -41,6 +41,17 @@ function load(): Pet {
 }
 function save(p: Pet) { localStorage.setItem('reddi.pet', JSON.stringify(p)); }
 
+function renderStat(label: string, value: number, isAge=false){
+  const pct = Math.max(0, Math.min(100, Math.round(value)));
+  const state = isAge ? 'ok' : pct < 25 ? 'bad' : pct < 50 ? 'warn' : 'ok';
+  return (
+    <>
+      <div className="stat-label">{label}</div>
+      <div className="bar" data-state={state}><span style={{width: pct + '%'}} /></div>
+    </>
+  );
+}
+
 export default function App() {
   const [pet, setPet] = useState<Pet>(() => load());
   const frame = useRef(0);
@@ -78,60 +89,74 @@ export default function App() {
     return 'idle';
   }, [pet]);
 
-  const doFeed = () => setPet(p => { const n = { ...p, hunger: clamp(p.hunger - 25), energy: clamp(p.energy + 5) }; save(n); return n; });
-  const doPlay = () => setPet(p => { const n = { ...p, fun: clamp(p.fun + 20), energy: clamp(p.energy - 8), hunger: clamp(p.hunger + 8) }; save(n); return n; });
-  const doClean= () => setPet(p => { const n = { ...p, clean: clamp(p.clean + 30) }; save(n); return n; });
-  const doSleep= () => setPet(p => { const n = { ...p, energy: clamp(p.energy + 25) }; save(n); return n; });
-  const doRename = () => {
+  const feed = () => setPet(p => { const n = { ...p, hunger: clamp(p.hunger - 25), energy: clamp(p.energy + 5) }; save(n); return n; });
+  const play = () => setPet(p => { const n = { ...p, fun: clamp(p.fun + 20), energy: clamp(p.energy - 8), hunger: clamp(p.hunger + 8) }; save(n); return n; });
+  const cleanUp = () => setPet(p => { const n = { ...p, clean: clamp(p.clean + 30) }; save(n); return n; });
+  const sleep = () => setPet(p => { const n = { ...p, energy: clamp(p.energy + 25) }; save(n); return n; });
+  const rename = () => {
     const name = prompt('Name your pet:', pet.name)?.trim();
     if (name) setPet(p => { const n = { ...p, name }; save(n); return n; });
   };
-  const doReset = () => {
+  const reset = () => {
     const n = defaultPet();
     save(n);
     setPet(n);
   };
 
-  const sprite = petSprite(mood, frame.current);
+  const ascii = petSprite(mood, frame.current);
+  const asciiLines = ascii.split('\n');
+  while (asciiLines.length && asciiLines[0].trim() === '') asciiLines.shift();
+  while (asciiLines.length && asciiLines[asciiLines.length - 1].trim() === '') asciiLines.pop();
+  const asciiFace = asciiLines.map(line => line.replace(/\s+$/, '')).join('\n');
 
   // Simple “evolution” badge for later: show stage by aggregate health
-  const health = Math.round(( (100-pet.hunger) + pet.fun + pet.clean + pet.energy ) / 4);
-  const stage = health > 85 ? '★ Stage 3' : health > 65 ? '★ Stage 2' : '★ Stage 1';
+  const fullness = 100 - pet.hunger;
+  const fun = pet.fun;
+  const clean = pet.clean;
+  const energy = pet.energy;
+  const health = Math.round(( fullness + fun + clean + energy ) / 4);
+  const stage = health > 85 ? 3 : health > 65 ? 2 : 1;
   const age = Math.floor((Date.now() - new Date(pet.born).getTime()) / 86400000);
+  const agePercent = Math.min(100, Math.round((age / 7) * 100));
+  const eggId = pet.name.toUpperCase().startsWith('EGG-') ? pet.name.toUpperCase().slice(4) : pet.name.toUpperCase();
+  const day = Math.max(1, age + 1);
 
   return (
-    <div className="console">
+    <div className="device">
       <div className="bezel">
         <div className="screen">
-          <pre className="ascii">{sprite}</pre>
+          <div className="header">
+            <span className="badge">reddy-pet</span>
+            <span className="badge">Stage {stage}</span>
+          </div>
 
-          <div className="stats">
-            <div>Hunger</div>
-            <div className="meter"><span style={{width: (100 - pet.hunger) + '%'}} /></div>
-            <div>Fun</div>
-            <div className="meter"><span style={{width: pet.fun + '%'}} /></div>
-            <div>Clean</div>
-            <div className="meter"><span style={{width: pet.clean + '%'}} /></div>
-            <div>Energy</div>
-            <div className="meter"><span style={{width: pet.energy + '%'}} /></div>
-            <div>Age</div>
-            <div style={{textAlign:'right'}}>{age}d</div>
-            <div>Health</div>
-            <div className="meter"><span style={{width: health + '%'}} /></div>
+          <div style={{display:'grid', gridTemplateColumns:'auto 1fr', gap:16}}>
+            <div className="face">
+              <pre aria-label="pet-face" style={{margin:0}}>{asciiFace}</pre>
+            </div>
+
+            <div>
+              <div className="stats">
+                {renderStat('Hunger', fullness)}
+                {renderStat('Fun', fun)}
+                {renderStat('Clean', clean)}
+                {renderStat('Energy', energy)}
+                {renderStat('Age', agePercent, true)}
+                {renderStat('Health', health)}
+              </div>
+            </div>
           </div>
 
           <div className="controls">
-            <button onClick={doFeed}>FEED</button>
-            <button className="sub" onClick={doPlay}>PLAY</button>
-            <button onClick={doClean}>CLEAN</button>
-            <button className="sub" onClick={doSleep}>SLEEP</button>
-            <button className="sub" onClick={doRename}>NAME</button>
-            <button className="sub" onClick={doReset}>RESET</button>
+            <button className="btn btn--primary" onClick={feed}>FEED</button>
+            <button className="btn" onClick={play}>PLAY</button>
+            <button className="btn btn--danger" onClick={cleanUp}>CLEAN</button>
+            <button className="btn" onClick={sleep}>SLEEP</button>
+            <button className="btn" onClick={rename}>NAME</button>
+            <button className="btn" onClick={reset}>RESET</button>
           </div>
 
-          <div className="footer">
-            {stage} · {pet.name} · Day {age}
-          </div>
+          <div className="meta">★ EGG-{eggId} • Day {day}</div>
         </div>
       </div>
     </div>
