@@ -48,10 +48,15 @@ body{font-family:Inter,system-ui,Segoe UI,Roboto,Apple Color Emoji,Noto Color Em
 .blog-grid{display:grid; margin-top:1.5rem; gap:16px; grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
 .blog-card{position:relative; border:1px solid #223047; border-radius:16px; padding:20px; background:linear-gradient(135deg,#0c1322,#131f33)}
 .blog-card::before{content:""; position:absolute; inset:12px; border-radius:14px; border:1px dashed #334155; opacity:.7; pointer-events:none}
+.blog-card--feature{padding:28px}
+.blog-card--feature::before{inset:16px}
 .blog-card:hover{border-color:var(--reddit); box-shadow:0 0 0 2px #ff450022}
 .blog-card__meta{font-size:.75rem; font-family:"Press Start 2P"; letter-spacing:.5px; text-transform:uppercase; color:#f97316}
 .blog-card__title{margin-top:.8rem; font-size:1.1rem; font-weight:700}
 .blog-card__excerpt{margin-top:.5rem; color:#cbd5e1}
+.blog-card--feature .blog-card__title{font-size:1.45rem; line-height:1.3}
+.blog-card--feature .blog-card__excerpt{font-size:1.02rem; color:#e2e8f0}
+.blog-card--feature .blog-card__cta{margin-top:1.3rem}
 .blog-card__cta{margin-top:1.1rem; display:inline-flex; align-items:center; gap:.4rem; color:var(--mint); font-weight:600}
 .blog-card__cta::after{content:"→"; font-family:"Press Start 2P"; font-size:.55rem}
 .blog-card--loading{background:repeating-linear-gradient(135deg,#0c1322 0 20px,#111b2c 20px 40px)}
@@ -71,6 +76,11 @@ body{font-family:Inter,system-ui,Segoe UI,Roboto,Apple Color Emoji,Noto Color Em
 @media (prefers-reduced-motion:no-preference){
   #pet.blink{animation:blink .8s steps(1) 1}
   .shell{animation:float 6s ease-in-out infinite}
+}
+@media (min-width:768px){
+  .blog-card--feature{grid-column:span 2; display:grid; align-content:start; gap:.75rem}
+  .blog-card--feature .blog-card__title{font-size:1.8rem}
+  .blog-card--feature .blog-card__excerpt{font-size:1.08rem}
 }
 @keyframes blink{
   0%,49%,100%{filter:none}
