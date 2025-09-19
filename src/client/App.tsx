@@ -3,17 +3,17 @@ import { petSprite, Mood } from './ascii';
 
 type Pet = {
   name: string;
-  hunger: number;      // 0..100 (higher worse)
-  fun: number;         // 0..100 (higher better)
-  clean: number;       // 0..100 (higher better)
-  energy: number;      // 0..100 (higher better)
+  hunger: number; // 0..100 (higher worse)
+  fun: number; // 0..100 (higher better)
+  clean: number; // 0..100 (higher better)
+  energy: number; // 0..100 (higher better)
   dayId: string;
-  lastTick: number;    // ms
-  born: string;        // YYYY-MM-DD
+  lastTick: number; // ms
+  born: string; // YYYY-MM-DD
 };
 
-const clamp = (v:number, min=0, max=100) => Math.max(min, Math.min(max, v));
-const todayId = () => new Date().toISOString().slice(0,10);
+const clamp = (v: number, min = 0, max = 100) => Math.max(min, Math.min(max, v));
+const todayId = () => new Date().toISOString().slice(0, 10);
 
 const defaultPet = (): Pet => ({
   name: 'EGG-420',
@@ -39,15 +39,19 @@ function load(): Pet {
   }
   return defaultPet();
 }
-function save(p: Pet) { localStorage.setItem('reddi.pet', JSON.stringify(p)); }
+function save(p: Pet) {
+  localStorage.setItem('reddi.pet', JSON.stringify(p));
+}
 
-function renderStat(label: string, value: number, isAge=false){
+function renderStat(label: string, value: number, isAge = false) {
   const pct = Math.max(0, Math.min(100, Math.round(value)));
   const state = isAge ? 'ok' : pct < 25 ? 'bad' : pct < 50 ? 'warn' : 'ok';
   return (
     <>
       <div className="stat-label">{label}</div>
-      <div className="bar" data-state={state}><span style={{width: pct + '%'}} /></div>
+      <div className="bar" data-state={state}>
+        <span style={{ width: pct + '%' }} />
+      </div>
     </>
   );
 }
@@ -60,18 +64,26 @@ export default function App() {
   useEffect(() => {
     const id = setInterval(() => {
       frame.current++;
-      setPet(prev => {
+      setPet((prev) => {
         const elapsed = Date.now() - prev.lastTick;
         const steps = Math.max(1, Math.floor(elapsed / 6000));
         let { hunger, fun, clean, energy } = prev;
 
         // Passive decay/gain (tuned for chill daily play)
         hunger = clamp(hunger + 1 * steps);
-        fun    = clamp(fun - 0.5 * steps);
-        clean  = clamp(clean - 0.4 * steps);
+        fun = clamp(fun - 0.5 * steps);
+        clean = clamp(clean - 0.4 * steps);
         energy = clamp(energy + 0.2 * steps); // small recharge if idle
 
-        const next = { ...prev, hunger, fun, clean, energy, lastTick: Date.now(), dayId: todayId() };
+        const next = {
+          ...prev,
+          hunger,
+          fun,
+          clean,
+          energy,
+          lastTick: Date.now(),
+          dayId: todayId(),
+        };
         save(next);
         return next;
       });
@@ -89,13 +101,43 @@ export default function App() {
     return 'idle';
   }, [pet]);
 
-  const feed = () => setPet(p => { const n = { ...p, hunger: clamp(p.hunger - 25), energy: clamp(p.energy + 5) }; save(n); return n; });
-  const play = () => setPet(p => { const n = { ...p, fun: clamp(p.fun + 20), energy: clamp(p.energy - 8), hunger: clamp(p.hunger + 8) }; save(n); return n; });
-  const cleanUp = () => setPet(p => { const n = { ...p, clean: clamp(p.clean + 30) }; save(n); return n; });
-  const sleep = () => setPet(p => { const n = { ...p, energy: clamp(p.energy + 25) }; save(n); return n; });
+  const feed = () =>
+    setPet((p) => {
+      const n = { ...p, hunger: clamp(p.hunger - 25), energy: clamp(p.energy + 5) };
+      save(n);
+      return n;
+    });
+  const play = () =>
+    setPet((p) => {
+      const n = {
+        ...p,
+        fun: clamp(p.fun + 20),
+        energy: clamp(p.energy - 8),
+        hunger: clamp(p.hunger + 8),
+      };
+      save(n);
+      return n;
+    });
+  const cleanUp = () =>
+    setPet((p) => {
+      const n = { ...p, clean: clamp(p.clean + 30) };
+      save(n);
+      return n;
+    });
+  const sleep = () =>
+    setPet((p) => {
+      const n = { ...p, energy: clamp(p.energy + 25) };
+      save(n);
+      return n;
+    });
   const rename = () => {
     const name = prompt('Name your pet:', pet.name)?.trim();
-    if (name) setPet(p => { const n = { ...p, name }; save(n); return n; });
+    if (name)
+      setPet((p) => {
+        const n = { ...p, name };
+        save(n);
+        return n;
+      });
   };
   const reset = () => {
     const n = defaultPet();
@@ -115,18 +157,20 @@ export default function App() {
     if (!last || last.trim() !== '') break;
     asciiLines.pop();
   }
-  const asciiFace = asciiLines.map(line => line.replace(/\s+$/, '')).join('\n');
+  const asciiFace = asciiLines.map((line) => line.replace(/\s+$/, '')).join('\n');
 
   // Simple “evolution” badge for later: show stage by aggregate health
   const fullness = 100 - pet.hunger;
   const fun = pet.fun;
   const clean = pet.clean;
   const energy = pet.energy;
-  const health = Math.round(( fullness + fun + clean + energy ) / 4);
+  const health = Math.round((fullness + fun + clean + energy) / 4);
   const stage = health > 85 ? 3 : health > 65 ? 2 : 1;
   const age = Math.floor((Date.now() - new Date(pet.born).getTime()) / 86400000);
   const agePercent = Math.min(100, Math.round((age / 7) * 100));
-  const eggId = pet.name.toUpperCase().startsWith('EGG-') ? pet.name.toUpperCase().slice(4) : pet.name.toUpperCase();
+  const eggId = pet.name.toUpperCase().startsWith('EGG-')
+    ? pet.name.toUpperCase().slice(4)
+    : pet.name.toUpperCase();
   const day = Math.max(1, age + 1);
 
   return (
@@ -138,9 +182,11 @@ export default function App() {
             <span className="badge">Stage {stage}</span>
           </div>
 
-          <div style={{display:'grid', gridTemplateColumns:'auto 1fr', gap:16}}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 16 }}>
             <div className="face">
-              <pre aria-label="pet-face" style={{margin:0}}>{asciiFace}</pre>
+              <pre aria-label="pet-face" style={{ margin: 0 }}>
+                {asciiFace}
+              </pre>
             </div>
 
             <div>
@@ -156,21 +202,29 @@ export default function App() {
           </div>
 
           <div className="controls">
-            <button className="btn btn--primary" onClick={feed}>FEED</button>
-            <button className="btn" onClick={play}>PLAY</button>
-            <button className="btn btn--danger" onClick={cleanUp}>CLEAN</button>
-            <button className="btn" onClick={sleep}>SLEEP</button>
-            <button className="btn" onClick={rename}>NAME</button>
-            <button className="btn" onClick={reset}>RESET</button>
+            <button className="btn btn--primary" onClick={feed}>
+              FEED
+            </button>
+            <button className="btn" onClick={play}>
+              PLAY
+            </button>
+            <button className="btn btn--danger" onClick={cleanUp}>
+              CLEAN
+            </button>
+            <button className="btn" onClick={sleep}>
+              SLEEP
+            </button>
+            <button className="btn" onClick={rename}>
+              NAME
+            </button>
+            <button className="btn" onClick={reset}>
+              RESET
+            </button>
           </div>
 
-          <div className="meta">★ EGG-{eggId} • Day {day}</div>
-          <nav className="links">
-            <a href="https://github.com/uxillary/reddi" target="_blank" rel="noreferrer">Reddi Repo</a>
-            <a href="https://github.com/uxillary" target="_blank" rel="noreferrer">GitHub</a>
-            <a href="https://adamj.link" target="_blank" rel="noreferrer">adamj.link</a>
-            <a href="https://devpost.com/software/reddi-pet" target="_blank" rel="noreferrer">Reddi App</a>
-          </nav>
+          <div className="meta">
+            ★ EGG-{eggId} • Day {day}
+          </div>
         </div>
       </div>
     </div>
